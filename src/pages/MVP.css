@@ -1,0 +1,265 @@
+.mvp-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  position: relative;
+}
+
+.btn-create-mvp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-create-mvp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+}
+
+.mvp-standings {
+  background: linear-gradient(135deg, #1a2f4a 0%, #0f1d2e 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(79, 195, 247, 0.1);
+}
+
+.mvp-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mvp-table-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 300px 200px 150px;
+  padding: 1rem;
+  background: rgba(79, 195, 247, 0.05);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid rgba(79, 195, 247, 0.2);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #b0bec5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mvp-table-body {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mvp-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 300px 200px 150px;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.05);
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+.mvp-row:hover {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.mvp-row.rank-1 {
+  border-left: 4px solid #ffd700;
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.mvp-row.rank-2 {
+  border-left: 4px solid #c0c0c0;
+  background: rgba(192, 192, 192, 0.05);
+}
+
+.mvp-row.rank-3 {
+  border-left: 4px solid #cd7f32;
+  background: rgba(205, 127, 50, 0.05);
+}
+
+.mvp-col-rank {
+  text-align: center;
+}
+
+.rank-badge {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #4fc3f7;
+}
+
+.mvp-col-player {
+  padding-left: 1rem;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(79, 195, 247, 0.3);
+}
+
+.player-ign {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.mvp-col-team {
+  text-align: center;
+}
+
+.team-name {
+  color: #4fc3f7;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.mvp-col-points {
+  text-align: center;
+}
+
+.mvp-points {
+  color: #ffa726;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.mvp-col-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btn-edit-mvp,
+.btn-delete-mvp {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-edit-mvp {
+  background: rgba(30, 136, 229, 0.2);
+  color: #4fc3f7;
+}
+
+.btn-edit-mvp:hover {
+  background: rgba(30, 136, 229, 0.3);
+  transform: scale(1.1);
+}
+
+.btn-delete-mvp {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.btn-delete-mvp:hover {
+  background: rgba(244, 67, 54, 0.3);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .mvp-page {
+    padding: 1rem;
+    padding-bottom: 6rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .btn-create-mvp {
+    position: static;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .mvp-standings {
+    padding: 0.75rem;
+  }
+
+  .mvp-table-header {
+    grid-template-columns: 50px 1fr 80px 80px 80px;
+    font-size: 0.65rem;
+    padding: 0.5rem 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .mvp-row {
+    grid-template-columns: 50px 1fr 80px 80px 80px;
+    padding: 0.6rem 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .mvp-col-rank {
+    font-size: 0.75rem;
+  }
+
+  .rank-badge {
+    font-size: 0.9rem;
+  }
+
+  .mvp-col-player {
+    padding-left: 0.25rem;
+  }
+
+  .player-info {
+    gap: 0.5rem;
+  }
+
+  .player-photo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .player-ign {
+    font-size: 0.85rem;
+  }
+
+  .team-name {
+    font-size: 0.8rem;
+  }
+
+  .mvp-points {
+    font-size: 1rem;
+  }
+
+  .mvp-col-actions {
+    gap: 0.25rem;
+  }
+
+  .btn-edit-mvp,
+  .btn-delete-mvp {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}

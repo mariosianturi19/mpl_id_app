@@ -1,0 +1,141 @@
+/* Desktop Navbar */
+.navbar-desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #0a1929 0%, #1a2f4a 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 0;
+}
+
+.navbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon {
+  font-size: 2rem;
+}
+
+.navbar-brand h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  color: #b0bec5;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: rgba(79, 195, 247, 0.1);
+  color: #4fc3f7;
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+}
+
+.nav-label {
+  font-size: 1rem;
+}
+
+/* Mobile Bottom Navigation */
+.navbar-mobile {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #0a1929 0%, #1a2f4a 100%);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 0.5rem;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  color: #b0bec5;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  flex: 1;
+  max-width: 120px;
+}
+
+.mobile-nav-item:hover {
+  background: rgba(79, 195, 247, 0.1);
+  color: #4fc3f7;
+}
+
+.mobile-nav-item.active {
+  background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+}
+
+.mobile-nav-icon {
+  font-size: 1.5rem;
+}
+
+.mobile-nav-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-desktop {
+    display: none;
+  }
+
+  .navbar-mobile {
+    display: flex;
+  }
+}

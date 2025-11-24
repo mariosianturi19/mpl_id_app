@@ -1,0 +1,273 @@
+.standings-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.standings-container {
+  background: linear-gradient(135deg, #1a2f4a 0%, #0f1d2e 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(79, 195, 247, 0.1);
+}
+
+.standings-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 180px 180px 200px 180px 180px;
+  padding: 1rem;
+  background: rgba(79, 195, 247, 0.05);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid rgba(79, 195, 247, 0.2);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #b0bec5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table-body {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 180px 180px 200px 180px 180px;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.05);
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+.table-row:hover {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.table-row.top-2 {
+  border-left: 4px solid #4caf50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+.table-row.bottom-2 {
+  border-left: 4px solid #f44336;
+  background: rgba(244, 67, 54, 0.05);
+}
+
+.col-pos {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.position-badge {
+  color: #4fc3f7;
+}
+
+.col-team {
+  padding-left: 1rem;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.team-logo-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid rgba(79, 195, 247, 0.3);
+}
+
+.team-name-standings {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.col-points {
+  text-align: center;
+}
+
+.match-points {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.col-record,
+.col-winrate,
+.col-net,
+.col-games {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.match-record {
+  color: #4fc3f7;
+}
+
+.win-rate {
+  color: #ffa726;
+  font-weight: 700;
+}
+
+.net-game-win {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.net-game-win.positive {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.net-game-win.negative {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.game-record {
+  color: #b0bec5;
+}
+
+.standings-legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(79, 195, 247, 0.1);
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.legend-indicator {
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.legend-item.playoff .legend-indicator {
+  background: #4caf50;
+}
+
+.legend-item.relegation .legend-indicator {
+  background: #f44336;
+}
+
+.legend-text {
+  color: #b0bec5;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .standings-page {
+    padding: 1rem;
+    padding-bottom: 6rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .standings-container {
+    padding: 0.75rem;
+  }
+
+  .table-header {
+    grid-template-columns: 40px 1fr 50px 70px 60px 60px 70px;
+    font-size: 0.6rem;
+    padding: 0.5rem 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .table-row {
+    grid-template-columns: 40px 1fr 50px 70px 60px 60px 70px;
+    padding: 0.6rem 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .col-pos {
+    font-size: 0.85rem;
+  }
+
+  .col-team {
+    padding-left: 0.25rem;
+  }
+
+  .team-info {
+    gap: 0.4rem;
+  }
+
+  .team-logo-small {
+    width: 30px;
+    height: 30px;
+  }
+
+  .team-name-standings {
+    font-size: 0.8rem;
+  }
+
+  .match-points {
+    font-size: 0.9rem;
+  }
+
+  .col-record,
+  .col-winrate,
+  .col-net,
+  .col-games {
+    font-size: 0.75rem;
+  }
+
+  .net-game-win {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .standings-legend {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .legend-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: 35px 1fr 45px 65px 55px 55px 65px;
+    font-size: 0.6rem;
+  }
+
+  .team-logo-small {
+    width: 25px;
+    height: 25px;
+  }
+
+  .team-name-standings {
+    font-size: 0.75rem;
+  }
+}

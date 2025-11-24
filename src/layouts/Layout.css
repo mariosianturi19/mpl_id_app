@@ -1,0 +1,18 @@
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0a1929 0%, #162238 100%);
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 5rem; /* Space for desktop navbar */
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 1rem; /* No navbar on top for mobile */
+    padding-bottom: 5rem; /* Space for mobile bottom nav */
+  }
+}
