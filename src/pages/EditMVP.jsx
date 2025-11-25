@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { updateMVP } from '../services/mvpApi';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Modal from '../components/Modal';
 import './EditMVP.css';
 
 const EditMVP = () => {
@@ -10,6 +11,7 @@ const EditMVP = () => {
   const location = useLocation();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [successModal, setSuccessModal] = useState(false);
   const [formData, setFormData] = useState(null);
 
   useEffect(() => {
@@ -56,14 +58,18 @@ const EditMVP = () => {
       console.log('Sending to API:', updateData);
       
       await updateMVP(id, updateData);
-      alert('MVP updated successfully!');
-      navigate('/mvp', { state: { reload: true, timestamp: Date.now() } });
+      setSuccessModal(true);
     } catch (err) {
       alert('Failed to update MVP. Please try again.');
       console.error('Error updating MVP:', err);
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setSuccessModal(false);
+    navigate('/mvp', { state: { reload: true, timestamp: Date.now() } });
   };
 
   if (error) {
@@ -164,6 +170,18 @@ const EditMVP = () => {
           </div>
         </form>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={successModal}
+        onClose={handleSuccessModalClose}
+        onConfirm={handleSuccessModalClose}
+        type="success"
+        title="MVP Updated!"
+        message={`"${formData?.ign}" from ${formData?.teamName} has been successfully updated.`}
+        confirmText="Go to MVP"
+        cancelText="Close"
+      />
     </div>
   );
 };

@@ -14,23 +14,51 @@ const mvpApi = axios.create({
 
 // API Functions for MVP
 export const fetchMVPs = async () => {
-  const response = await mvpApi.get('/mvp');
-  return response.data;
+  console.log('🔄 Fetching MVPs from:', `${MVP_BASE_URL}/mvp`);
+  try {
+    const response = await mvpApi.get('/mvp');
+    console.log('✅ MVPs fetched:', response.data?.length || 0, 'players');
+    return response.data;
+  } catch (error) {
+    console.error('❌ Error fetching MVPs:', error.message);
+    throw error;
+  }
 };
 
 export const createMVP = async (mvpData) => {
-  const response = await mvpApi.post('/mvp', mvpData);
-  return response.data;
+  console.log('🔄 Creating MVP:', mvpData.ign);
+  try {
+    const response = await mvpApi.post('/mvp', mvpData);
+    console.log('✅ MVP created:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Error creating MVP:', error.message);
+    throw error;
+  }
 };
 
 export const updateMVP = async (id, mvpData) => {
-  const response = await mvpApi.patch(`/mvp/${id}`, mvpData);
-  return response.data;
+  console.log('🔄 Updating MVP:', id, mvpData);
+  try {
+    const response = await mvpApi.patch(`/mvp/${id}`, mvpData);
+    console.log('✅ MVP updated:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('❌ Error updating MVP:', error.message);
+    throw error;
+  }
 };
 
 export const deleteMVP = async (id) => {
-  const response = await mvpApi.delete(`/mvp/${id}`);
-  return response.data;
+  console.log('🔄 Deleting MVP:', id);
+  try {
+    const response = await mvpApi.delete(`/mvp/${id}`);
+    console.log('✅ MVP deleted');
+    return response.data;
+  } catch (error) {
+    console.error('❌ Error deleting MVP:', error.message);
+    throw error;
+  }
 };
 
 export default mvpApi;

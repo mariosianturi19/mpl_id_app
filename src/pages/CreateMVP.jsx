@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createMVP } from '../services/mvpApi';
+import Modal from '../components/Modal';
 import './CreateMVP.css';
 
 const CreateMVP = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
     ign: '',
     teamName: '',
@@ -37,14 +39,18 @@ const CreateMVP = () => {
     try {
       setLoading(true);
       await createMVP(formData);
-      alert('MVP created successfully!');
-      navigate('/mvp', { state: { reload: true, timestamp: Date.now() } });
+      setSuccessModal(true);
     } catch (err) {
       alert('Failed to create MVP. Please try again.');
       console.error('Error creating MVP:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setSuccessModal(false);
+    navigate('/mvp', { state: { reload: true, timestamp: Date.now() } });
   };
 
   return (
@@ -132,6 +138,18 @@ const CreateMVP = () => {
           </div>
         </form>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={successModal}
+        onClose={handleSuccessModalClose}
+        onConfirm={handleSuccessModalClose}
+        type="success"
+        title="MVP Added!"
+        message={`"${formData.ign}" from ${formData.teamName} has been added to the MVP race.`}
+        confirmText="Go to MVP"
+        cancelText="Close"
+      />
     </div>
   );
 };

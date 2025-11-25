@@ -13,49 +13,54 @@ const Standings = () => {
   }, []);
 
   const loadStandings = async () => {
+    console.log('📊 Loading standings...');
     try {
       setLoading(true);
       const data = await fetchTeams();
+      console.log('✅ Standings loaded successfully:', data);
       
-      // Sort teams by match points (wins = 1 point each), then by net game win
+      // Sort: Points (Match Won) > Net Game Win
       const sortedTeams = data.sort((a, b) => {
-        const pointsA = a.matchesWon || 0;
-        const pointsB = b.matchesWon || 0;
+        const pointsA = (a.matchesWon || 0); // Di MPL ID biasanya Match Won = 1 poin
+        const pointsB = (b.matchesWon || 0);
         
-        if (pointsB !== pointsA) {
-          return pointsB - pointsA; // Sort by points descending
-        }
+        if (pointsB !== pointsA) return pointsB - pointsA;
         
-        // If points are equal, sort by net game win
-        const netGameWinA = (a.gamesWon || 0) - (a.gamesLost || 0);
-        const netGameWinB = (b.gamesWon || 0) - (b.gamesLost || 0);
-        return netGameWinB - netGameWinA;
+        const netA = (a.gamesWon || 0) - (a.gamesLost || 0);
+        const netB = (b.gamesWon || 0) - (b.gamesLost || 0);
+        return netB - netA;
       });
       
       setTeams(sortedTeams);
       setError(null);
     } catch (err) {
+      console.error('❌ Failed to load standings:', err);
       setError('Failed to load standings. Please try again later.');
-      console.error('Error loading standings:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const calculateMatchPoints = (matchesWon) => {
-    return matchesWon || 0;
+  const calculateWinRate = (won, lost) => {
+    const total = (won || 0) + (lost || 0);
+    if (total === 0) return '0%';
+    return `${((won / total) * 100).toFixed(0)}%`;
   };
 
-  const calculateWinRate = (gamesWon, gamesLost) => {
-    const total = (gamesWon || 0) + (gamesLost || 0);
-    if (total === 0) return '0.0%';
-    const rate = ((gamesWon || 0) / total) * 100;
-    return `${rate.toFixed(1)}%`;
+  const getNetGameWin = (won, lost) => {
+    return (won || 0) - (lost || 0);
   };
 
-  const calculateNetGameWin = (gamesWon, gamesLost) => {
-    const net = (gamesWon || 0) - (gamesLost || 0);
-    return net > 0 ? `+${net}` : net.toString();
+  const getZoneClass = (index) => {
+    if (index <= 5) return 'zone-playoff'; // Rank 1-6 (Lolos Playoff)
+    return 'zone-eliminated'; // Rank 7+ (Tidak Lolos)
+  };
+
+  const getRankClass = (index) => {
+    if (index === 0) return 'rank-1';
+    if (index === 1) return 'rank-2';
+    if (index === 2) return 'rank-3';
+    return '';
   };
 
   if (loading) return <LoadingSpinner />;
@@ -72,77 +77,73 @@ const Standings = () => {
   return (
     <div className="standings-page">
       <div className="page-header">
-        <h1 className="page-title">📊 Standings</h1>
-        <p className="page-subtitle">MPL Indonesia Season 14 Team Rankings</p>
+        <h1 className="page-title">Season Standings</h1>
+        <p className="page-subtitle">Regular Season 16 Leaderboard</p>
       </div>
 
       <div className="standings-container">
         <div className="standings-table">
+          {/* Header */}
           <div className="table-header">
-            <div className="col-pos">POS</div>
-            <div className="col-team">TEAM</div>
-            <div className="col-points">MATCH POINT</div>
-            <div className="col-record">MATCH W-L</div>
-            <div className="col-net">NET GAME WIN</div>
-            <div className="col-games">GAME W-L</div>
-            <div className="col-winrate">WIN RATE</div>
+            <div className="header-cell">Rank</div>
+            <div className="header-cell text-left">Team</div>
+            <div className="header-cell">Points</div>
+            <div className="header-cell">Match</div>
+            <div className="header-cell">Net Game</div>
+            <div className="header-cell">Game W-L</div>
+            <div className="header-cell">Win Rate</div>
           </div>
 
+          {/* Body */}
           <div className="table-body">
             {teams.map((team, index) => {
-              const matchesWon = team.matchesWon || 0;
-              const matchesLost = team.matchesLost || 0;
-              const gamesWon = team.gamesWon || 0;
-              const gamesLost = team.gamesLost || 0;
-              const position = index + 1;
-              
-              // Determine row class based on position
-              let rowClass = 'table-row';
-              if (position <= 2) {
-                rowClass += ' top-2'; // Playoff spots
-              } else if (position >= teams.length - 1) {
-                rowClass += ' bottom-2'; // Relegation zone
-              }
+              const netGame = getNetGameWin(team.gamesWon, team.gamesLost);
+              const rank = index + 1;
+              const zoneClass = getZoneClass(index);
+              const rankClass = getRankClass(index);
 
               return (
-                <div key={team._id || team.id} className={rowClass}>
-                  <div className="col-pos">
-                    <span className="position-badge">
-                      {position === 1 && '👑 '}
-                      {position === 2 && '⭐ '}
-                      {position}.
-                    </span>
+                <div key={team._id || team.id} className={`table-row ${zoneClass} ${rankClass}`}>
+                  {/* Rank */}
+                  <div className="col-rank">
+                    <span className="rank-badge">{rank}</span>
                   </div>
-                  
+
+                  {/* Team */}
                   <div className="col-team">
-                    <div className="team-info">
-                      {team.logo && (
-                        <img src={team.logo} alt={team.name} className="team-logo-small" />
-                      )}
-                      <span className="team-name-standings">{team.name}</span>
-                    </div>
+                    {team.logo && (
+                      <img src={team.logo} alt={team.name} className="team-logo-mini" />
+                    )}
+                    <span className="team-name">{team.name}</span>
                   </div>
-                  
-                  <div className="col-points">
-                    <span className="match-points">{calculateMatchPoints(matchesWon)}</span>
+
+                  {/* Points (Match Won) */}
+                  <div className="col-stat">
+                    <span className="stat-highlight">{team.matchesWon || 0}</span>
                   </div>
-                  
-                  <div className="col-record">
-                    <span className="match-record">{matchesWon}-{matchesLost}</span>
+
+                  {/* Match Record */}
+                  <div className="col-stat">
+                    {team.matchesWon || 0} - {team.matchesLost || 0}
                   </div>
-                  
-                  <div className="col-net">
-                    <span className={`net-game-win ${(gamesWon - gamesLost) > 0 ? 'positive' : (gamesWon - gamesLost) < 0 ? 'negative' : ''}`}>
-                      {calculateNetGameWin(gamesWon, gamesLost)}
+
+                  {/* Net Game Win */}
+                  <div className="col-stat">
+                    <span className={`net-badge ${netGame > 0 ? 'positive' : netGame < 0 ? 'negative' : 'neutral'}`}>
+                      {netGame > 0 ? `+${netGame}` : netGame}
                     </span>
                   </div>
-                  
-                  <div className="col-games">
-                    <span className="game-record">{gamesWon}-{gamesLost}</span>
+
+                  {/* Game Record */}
+                  <div className="col-stat">
+                    {team.gamesWon || 0} - {team.gamesLost || 0}
                   </div>
-                  
-                  <div className="col-winrate">
-                    <span className="win-rate">{calculateWinRate(gamesWon, gamesLost)}</span>
+
+                  {/* Win Rate */}
+                  <div className="col-stat">
+                    <span className="win-rate">
+                      {calculateWinRate(team.gamesWon, team.gamesLost)}
+                    </span>
                   </div>
                 </div>
               );
@@ -151,13 +152,13 @@ const Standings = () => {
         </div>
 
         <div className="standings-legend">
-          <div className="legend-item playoff">
-            <span className="legend-indicator"></span>
-            <span className="legend-text">Playoff Qualification</span>
+          <div className="legend-item">
+            <span className="legend-dot dot-playoff"></span>
+            <span className="legend-text">Lolos Playoff (Rank 1-6)</span>
           </div>
-          <div className="legend-item relegation">
-            <span className="legend-indicator"></span>
-            <span className="legend-text">Relegation Zone</span>
+          <div className="legend-item">
+            <span className="legend-dot dot-eliminated"></span>
+            <span className="legend-text">Tidak Lolos (Rank 7+)</span>
           </div>
         </div>
       </div>

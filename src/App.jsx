@@ -1,9 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './layouts/Layout';
+
+// Pages Import
 import Teams from './pages/Teams';
+import TeamsRoster from './pages/TeamsRoster'; // List teams dengan full roster
 import CreateTeam from './pages/CreateTeam';
-import TeamDetail from './pages/TeamDetail';
+import TeamDetail from './pages/TeamDetail'; // Halaman Edit
+import TeamView from './pages/TeamView';     // Halaman View Detail
 import Standings from './pages/Standings';
 import MVP from './pages/MVP';
 import CreateMVP from './pages/CreateMVP';
@@ -14,13 +18,30 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          {/* Halaman Utama (Update/Edit Teams List) */}
           <Route index element={<Teams />} />
+          
+          {/* Halaman Teams Roster (View dengan full roster) */}
+          <Route path="teams-roster" element={<TeamsRoster />} />
+          
+          {/* Halaman Create */}
           <Route path="create" element={<CreateTeam />} />
-          <Route path="team/:id" element={<TeamDetail />} />
+          
+          {/* PENTING: Routing Tim */}
+          {/* Halaman View (Read Only) - Diakses via klik kartu di halaman Teams */}
+          <Route path="team/:id" element={<TeamView />} />
+          
+          {/* Halaman Edit - Diakses via tombol edit */}
+          <Route path="team/edit/:id" element={<TeamDetail />} />
+          
+          {/* Standings & MVP */}
           <Route path="standings" element={<Standings />} />
           <Route path="mvp" element={<MVP />} />
           <Route path="mvp/create" element={<CreateMVP />} />
           <Route path="mvp/edit/:id" element={<EditMVP />} />
+          
+          {/* Fallback 404 */}
+          <Route path="*" element={<div style={{color:'white', textAlign:'center', padding:'5rem'}}>404 - Page Not Found</div>} />
         </Route>
       </Routes>
     </Router>

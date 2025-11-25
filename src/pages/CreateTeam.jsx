@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTeam } from '../services/api';
+import Modal from '../components/Modal';
 import './CreateTeam.css';
 
 const CreateTeam = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     logo: '',
@@ -65,18 +67,12 @@ const CreateTeam = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
     if (!formData || !formData.name || !formData.name.trim()) {
       alert('Team name is required!');
       return;
     }
 
-    // Check if players array exists and all players are filled
-    if (!formData.players || !Array.isArray(formData.players)) {
-      alert('Players data is missing!');
-      return;
-    }
-
+    // Check players
     const allPlayersFilled = formData.players.every(p => p && p.ign && p.ign.trim());
     if (!allPlayersFilled) {
       alert('All player IGNs are required!');
@@ -85,9 +81,26 @@ const CreateTeam = () => {
 
     try {
       setLoading(true);
-      await createTeam(formData);
-      alert('Team created successfully!');
-      navigate('/', { state: { reload: true, timestamp: Date.now() } });
+      
+      // Konversi data ke format API (Flat)
+      const apiData = {
+        name: formData.name,
+        logo: formData.logo,
+        region: formData.region,
+        coach: formData.coaches[0]?.name || '',
+        member1: formData.players[0]?.ign || '',
+        member2: formData.players[1]?.ign || '',
+        member3: formData.players[2]?.ign || '',
+        member4: formData.players[3]?.ign || '',
+        member5: formData.players[4]?.ign || '',
+        matchesWon: formData.matchesWon,
+        matchesLost: formData.matchesLost,
+        gamesWon: formData.gamesWon,
+        gamesLost: formData.gamesLost,
+      };
+
+      await createTeam(apiData);
+      setSuccessModal(true);
     } catch (err) {
       alert('Failed to create team. Please try again.');
       console.error('Error creating team:', err);
@@ -96,18 +109,23 @@ const CreateTeam = () => {
     }
   };
 
+  const handleSuccessModalClose = () => {
+    setSuccessModal(false);
+    navigate('/', { state: { reload: true, timestamp: Date.now() } });
+  };
+
   return (
     <div className="create-team-page">
       <div className="form-container">
         <div className="form-header">
-          <h1 className="form-title">➕ Create New Team</h1>
-          <p className="form-subtitle">Add a new MPL team to the roster</p>
+          <h1 className="form-title">Create New Team</h1>
+          <p className="form-subtitle">Add a new contender to the league roster</p>
         </div>
 
         <form onSubmit={handleSubmit} className="team-form">
           {/* Team Information */}
           <div className="form-section">
-            <h3 className="section-title">Team Information</h3>
+            <h3 className="section-title">General Info</h3>
             
             <div className="form-group">
               <label htmlFor="name">Team Name *</label>
@@ -117,82 +135,77 @@ const CreateTeam = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="e.g., RRQ Hoshi"
+                placeholder="e.g. RRQ Hoshi"
                 required
+                autoComplete="off"
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="logo">Logo URL</label>
-              <input
-                type="url"
-                id="logo"
-                name="logo"
-                value={formData.logo}
-                onChange={handleChange}
-                placeholder="https://example.com/logo.png"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="region">Region</label>
-              <input
-                type="text"
-                id="region"
-                name="region"
-                value={formData.region}
-                onChange={handleChange}
-                placeholder="Indonesia"
-              />
+            <div className="form-grid">
+              <div className="form-group">
+                <label htmlFor="region">Region</label>
+                <input
+                  type="text"
+                  id="region"
+                  name="region"
+                  value={formData.region}
+                  onChange={handleChange}
+                  placeholder="Indonesia"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="logo">Logo URL</label>
+                <input
+                  type="url"
+                  id="logo"
+                  name="logo"
+                  value={formData.logo}
+                  onChange={handleChange}
+                  placeholder="https://..."
+                />
+              </div>
             </div>
           </div>
 
           {/* Statistics */}
           <div className="form-section">
-            <h3 className="section-title">Statistics</h3>
+            <h3 className="section-title">Team Statistics</h3>
             
             <div className="form-grid">
               <div className="form-group">
-                <label htmlFor="matchesWon">Matches Won</label>
+                <label>Match Won</label>
                 <input
                   type="number"
-                  id="matchesWon"
                   name="matchesWon"
                   value={formData.matchesWon}
                   onChange={handleChange}
                   min="0"
                 />
               </div>
-
               <div className="form-group">
-                <label htmlFor="matchesLost">Matches Lost</label>
+                <label>Match Lost</label>
                 <input
                   type="number"
-                  id="matchesLost"
                   name="matchesLost"
                   value={formData.matchesLost}
                   onChange={handleChange}
                   min="0"
                 />
               </div>
-
               <div className="form-group">
-                <label htmlFor="gamesWon">Games Won</label>
+                <label>Game Won</label>
                 <input
                   type="number"
-                  id="gamesWon"
                   name="gamesWon"
                   value={formData.gamesWon}
                   onChange={handleChange}
                   min="0"
                 />
               </div>
-
               <div className="form-group">
-                <label htmlFor="gamesLost">Games Lost</label>
+                <label>Game Lost</label>
                 <input
                   type="number"
-                  id="gamesLost"
                   name="gamesLost"
                   value={formData.gamesLost}
                   onChange={handleChange}
@@ -204,7 +217,7 @@ const CreateTeam = () => {
 
           {/* Players */}
           <div className="form-section">
-            <h3 className="section-title">Players Lineup *</h3>
+            <h3 className="section-title">Active Roster</h3>
             
             {formData.players.map((player, index) => (
               <div key={index} className="player-input-group">
@@ -213,17 +226,18 @@ const CreateTeam = () => {
                   <input
                     type="text"
                     value={player.role}
-                    onChange={(e) => handlePlayerChange(index, 'role', e.target.value)}
-                    placeholder="Role"
+                    readOnly
+                    className="input-readonly"
+                    style={{ opacity: 0.7, cursor: 'default' }}
                   />
                 </div>
                 <div className="form-group">
-                  <label>IGN (In-Game Name)</label>
+                  <label>IGN (In-Game Name) *</label>
                   <input
                     type="text"
                     value={player.ign}
                     onChange={(e) => handlePlayerChange(index, 'ign', e.target.value)}
-                    placeholder="Player IGN"
+                    placeholder={`Enter ${player.role} Name`}
                     required
                   />
                 </div>
@@ -243,16 +257,16 @@ const CreateTeam = () => {
                     type="text"
                     value={coach.name}
                     onChange={(e) => handleCoachChange(index, 'name', e.target.value)}
-                    placeholder="Coach name"
+                    placeholder="Coach Name"
                   />
                 </div>
                 <div className="form-group">
-                  <label>Role</label>
+                  <label>Position</label>
                   <input
                     type="text"
                     value={coach.role}
                     onChange={(e) => handleCoachChange(index, 'role', e.target.value)}
-                    placeholder="Coach role"
+                    placeholder="Role"
                   />
                 </div>
                 {formData.coaches.length > 1 && (
@@ -260,6 +274,7 @@ const CreateTeam = () => {
                     type="button"
                     onClick={() => removeCoach(index)}
                     className="btn-remove-coach"
+                    title="Remove Coach"
                   >
                     ✕
                   </button>
@@ -272,7 +287,7 @@ const CreateTeam = () => {
               onClick={addCoach}
               className="btn-add-coach"
             >
-              ➕ Add Coach
+              + Add Assistant Coach
             </button>
           </div>
 
@@ -291,11 +306,23 @@ const CreateTeam = () => {
               className="btn-submit"
               disabled={loading}
             >
-              {loading ? 'Creating...' : 'Create Team'}
+              {loading ? 'Creating Team...' : 'Create Team'}
             </button>
           </div>
         </form>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={successModal}
+        onClose={handleSuccessModalClose}
+        onConfirm={handleSuccessModalClose}
+        type="success"
+        title="Team Created!"
+        message={`"${formData.name}" has been successfully added to the roster.`}
+        confirmText="Go to Teams"
+        cancelText="Close"
+      />
     </div>
   );
 };
