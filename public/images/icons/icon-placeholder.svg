@@ -1,0 +1,14 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#2196F3"/>
+
+  <!-- PWA Text -->
+  <text x="256" y="200" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="white" text-anchor="middle">PWA</text>
+
+  <!-- App Icon -->
+  <circle cx="256" cy="340" r="80" fill="white" opacity="0.9"/>
+  <path d="M 256 280 L 216 380 L 296 380 Z" fill="#2196F3"/>
+
+  <!-- Border -->
+  <rect width="512" height="512" fill="none" stroke="white" stroke-width="8" opacity="0.3"/>
+</svg>

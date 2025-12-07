@@ -1,0 +1,84 @@
+/* Footer.css - Ultra Minimalist Brand Design */
+
+.footer {
+  /* Glassmorphism Background */
+  background: rgba(2, 6, 23, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  /* Border & Spacing */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 0;
+  margin-top: auto; /* Push footer to bottom */
+  position: relative;
+  z-index: 10;
+}
+
+/* Top Gradient Line Effect (Glow) */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #818cf8, transparent);
+  opacity: 0.6;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center; /* Posisi tengah */
+  align-items: center;
+}
+
+/* --- Footer Brand --- */
+.footer-brand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-text {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #f8fafc;
+  display: block;
+  /* Subtle text glow */
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.brand-highlight {
+  color: #38bdf8; /* Light Blue */
+}
+
+.brand-tagline {
+  color: #64748b; /* Slate-500 */
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 1rem 6rem 1rem; /* Extra padding bottom for Mobile Nav */
+  }
+
+  .brand-text {
+    font-size: 1.5rem;
+  }
+  
+  .brand-tagline {
+    font-size: 0.7rem;
+  }
+}

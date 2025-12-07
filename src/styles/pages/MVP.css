@@ -1,0 +1,392 @@
+/* MVP.css - Modern Player Rankings Design */
+
+.mvp-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Page Header --- */
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #facc15, #ffffff, #facc15); /* Gold Gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.3));
+}
+
+.page-subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Floating Create Button */
+.btn-create-mvp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #facc15;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-create-mvp:hover {
+  background: rgba(250, 204, 21, 0.1);
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+  transform: translateY(-2px);
+}
+
+/* --- MVP Container (Glass Card) --- */
+.mvp-standings {
+  background: rgba(16, 24, 40, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Gold Line Top */
+.mvp-standings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #facc15, #fbbf24);
+  z-index: 2;
+}
+
+/* --- Table Layout (Desktop) --- */
+.mvp-table {
+  width: 100%;
+}
+
+.mvp-table-header {
+  display: grid;
+  /* Rank | Player | Team | Points | Actions */
+  grid-template-columns: 80px 2fr 1.5fr 1fr 120px;
+  padding: 1.2rem 1.5rem;
+  background: rgba(2, 6, 23, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Alignment helper for header */
+.mvp-table-header > div:nth-child(2) { text-align: left; padding-left: 1rem; }
+
+.mvp-row {
+  display: grid;
+  grid-template-columns: 80px 2fr 1.5fr 1fr 120px;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+  align-items: center;
+  position: relative;
+}
+
+.mvp-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(5px);
+}
+
+/* --- Rank Styling --- */
+.mvp-col-rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank-badge {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #94a3b8;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Podium Colors */
+.mvp-row.rank-1 .rank-badge {
+  color: #fcd34d; /* Gold */
+  background: rgba(252, 211, 77, 0.1);
+  border: 1px solid rgba(252, 211, 77, 0.3);
+  box-shadow: 0 0 15px rgba(252, 211, 77, 0.15);
+}
+
+.mvp-row.rank-2 .rank-badge {
+  color: #e2e8f0; /* Silver */
+  background: rgba(226, 232, 240, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+}
+
+.mvp-row.rank-3 .rank-badge {
+  color: #fdba74; /* Bronze */
+  background: rgba(253, 186, 116, 0.1);
+  border: 1px solid rgba(253, 186, 116, 0.3);
+}
+
+/* --- Player Column --- */
+.mvp-col-player {
+  padding-left: 1rem;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: #0f172a;
+}
+
+.player-ign {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+/* --- Team Column --- */
+.mvp-col-team {
+  text-align: center;
+}
+
+.team-name {
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+/* --- Points Column --- */
+.mvp-col-points {
+  text-align: center;
+}
+
+.mvp-points {
+  color: #facc15;
+  font-weight: 800;
+  font-size: 1.4rem;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
+}
+
+/* --- Actions Column --- */
+.mvp-col-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-mvp {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+}
+.btn-edit-mvp:hover { background: rgba(56, 189, 248, 0.2); }
+
+.btn-delete-mvp {
+  background: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
+}
+.btn-delete-mvp:hover { background: rgba(244, 63, 94, 0.2); }
+
+/* --- Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(16, 24, 40, 0.5);
+  border-radius: 24px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* =================================================
+   RESPONSIVE MOBILE DESIGN (Fit to Screen)
+   ================================================= */
+@media (max-width: 768px) {
+  .mvp-page {
+    padding: 1rem 0.5rem 6rem 0.5rem;
+  }
+
+  .page-title { font-size: 2rem; }
+  
+  /* Hide standard header */
+  .mvp-table-header { display: none; }
+
+  /* Floating button pindah ke bawah judul agar rapi */
+  .btn-create-mvp {
+    position: relative;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+    display: block;
+    background: linear-gradient(135deg, #facc15, #eab308);
+    color: #020617;
+  }
+
+  /* Compact Grid Row */
+  .mvp-row {
+    display: grid;
+    /* Kolom 1: Rank (Kecil)
+       Kolom 2: Info Pemain (Expand)
+       Kolom 3: Poin & Aksi (Auto) */
+    grid-template-columns: 45px 1fr auto;
+    grid-template-rows: auto;
+    gap: 0.8rem;
+    padding: 1rem 0.8rem;
+    height: auto;
+  }
+
+  .mvp-row:hover { transform: none; }
+
+  /* 1. Rank */
+  .mvp-col-rank {
+    justify-content: flex-start;
+  }
+  .rank-badge {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  /* 2. Player Info (Photo + Name + Team) */
+  .mvp-col-player {
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .player-info {
+    display: grid;
+    grid-template-columns: 40px 1fr; /* Photo | Text */
+    grid-template-rows: auto auto; /* IGN | Team */
+    column-gap: 0.8rem;
+    row-gap: 0.1rem;
+    align-items: center;
+  }
+
+  .player-photo {
+    grid-row: 1 / 3; /* Foto span 2 baris */
+    width: 40px;
+    height: 40px;
+  }
+
+  .player-ign {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1rem;
+    line-height: 1;
+    align-self: end;
+  }
+
+  /* Team Name dipindah ke dalam player info via CSS Grid */
+  .mvp-col-team {
+    display: none; /* Sembunyikan kolom asli */
+  }
+  
+  /* Kita buat team name muncul di mobile via pseudo-element atau manipulasi JS, 
+     tapi karena struktur DOM sudah ada, kita gunakan struktur yang ada di .player-info 
+     (lihat perubahan JSX di bawah) */
+     
+  .team-name-mobile {
+    display: block; /* Muncul hanya di mobile */
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-align: left;
+    background: none;
+    padding: 0;
+    align-self: start;
+  }
+
+  /* 3. Points & Actions (Right Side) */
+  .mvp-col-points {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .mvp-points {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .mvp-col-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .btn-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Helper class untuk desktop agar team name mobile tidak muncul */
+@media (min-width: 769px) {
+  .team-name-mobile {
+    display: none;
+  }
+}
